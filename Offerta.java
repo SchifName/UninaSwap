@@ -1,6 +1,5 @@
 import java.util.List;
 
-// ================== OFFERTA BASE ==================
 abstract class Offerta {
     private utente utente;
     private annuncio annuncio;
@@ -11,24 +10,12 @@ abstract class Offerta {
         this.annuncio = annuncio;
     }
 
-    public utente getUtente() {
-        return utente;
-    }
-
-    public annuncio getAnnuncio() {
-        return annuncio;
-    }
-
-    public StatoOfferta getStato() {
-        return stato;
-    }
-
-    public void setStato(StatoOfferta stato) {
-        this.stato = stato;
-    }
+    public utente getUtente() { return utente; }
+    public annuncio getAnnuncio() { return annuncio; }
+    public StatoOfferta getStato() { return stato; }
+    public void setStato(StatoOfferta stato) { this.stato = stato; }
 }
 
-// ================== OFFERTA VENDITA ==================
 class OffertaVendita extends Offerta {
     private double importoProposto;
 
@@ -37,19 +24,9 @@ class OffertaVendita extends Offerta {
         this.importoProposto = importoProposto;
     }
 
-    public double getImportoProposto() {
-        return importoProposto;
-    }
-
-    @Override
-    public String toString() {
-        return "OffertaVendita da " + getUtente() +
-               " per annuncio: " + getAnnuncio().getTitolo() +
-               " | importo: " + importoProposto + "€";
-    }
+    public double getImportoProposto() { return importoProposto; }
 }
 
-// ================== OFFERTA SCAMBIO ==================
 class OffertaScambio extends Offerta {
     private List<String> oggettiProposti;
 
@@ -58,19 +35,9 @@ class OffertaScambio extends Offerta {
         this.oggettiProposti = oggettiProposti;
     }
 
-    public List<String> getOggettiProposti() {
-        return oggettiProposti;
-    }
-
-    @Override
-    public String toString() {
-        return "OffertaScambio da " + getUtente() +
-               " per annuncio: " + getAnnuncio().getTitolo() +
-               " | oggetti proposti: " + oggettiProposti;
-    }
+    public List<String> getOggettiProposti() { return oggettiProposti; }
 }
 
-// ================== OFFERTA REGALO ==================
 class OffertaRegalo extends Offerta {
     private String messaggio;
 
@@ -79,14 +46,5 @@ class OffertaRegalo extends Offerta {
         this.messaggio = messaggio;
     }
 
-    public String getMessaggio() {
-        return messaggio;
-    }
-
-    @Override
-    public String toString() {
-        return "OffertaRegalo da " + getUtente() +
-               " per annuncio: " + getAnnuncio().getTitolo() +
-               " | messaggio: \"" + messaggio + "\"";
-    }
+    public String getMessaggio() { return messaggio; }
 }

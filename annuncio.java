@@ -1,71 +1,60 @@
-// Annuncio.java
+import java.util.ArrayList;
+import java.util.List;
 
 public class annuncio {
     private String titolo;
     private String descrizione;
-    private double prezzo;                   // usato solo per VENDITA
-    private utente utente;
+    private String categoria;
     private TipologiaOfferta tipologia;
-    private StatoOfferta stato;
+    private List<Offerta> offerte = new ArrayList<>();
 
-    // Costruttore protetto: vogliamo che venga usato dalle sottoclassi
-    protected annuncio(String titolo, String descrizione, double prezzo,
-                       utente utente, TipologiaOfferta tipologia) {
+    protected annuncio(String titolo, String descrizione, String categoria, TipologiaOfferta tipologia) {
         this.titolo = titolo;
         this.descrizione = descrizione;
+        this.categoria = categoria;
         this.tipologia = tipologia;
-        this.utente = utente;
-        this.stato = StatoOfferta.ATTIVA;
-        // il prezzo ha senso solo per VENDITA
-        this.prezzo = (tipologia == TipologiaOfferta.VENDITA) ? prezzo : 0.0;
     }
 
-    // Getter
     public String getTitolo() { return titolo; }
     public String getDescrizione() { return descrizione; }
-    public double getPrezzo() { return prezzo; }
-    public utente getUtente() { return utente; }
+    public String getCategoria() { return categoria; }
     public TipologiaOfferta getTipologia() { return tipologia; }
-    public StatoOfferta getStato() { return stato; }
 
-    // Setter minimi utili
-    public void setStato(StatoOfferta stato) { this.stato = stato; }
-
-    // Se proprio vuoi cambiare il prezzo, lo permettiamo solo se è VENDITA
-    public void setPrezzo(double prezzo) {
-        if (tipologia == TipologiaOfferta.VENDITA) {
-            this.prezzo = prezzo;
-        }
-    }
+    public List<Offerta> getOfferte() { return offerte; }
+    public void aggiungiOfferta(Offerta o) { if (o != null) offerte.add(o); }
 
     @Override
     public String toString() {
-        String p = (tipologia == TipologiaOfferta.VENDITA) ? (prezzo + "€") : "N/D";
-        return "Annuncio: " + titolo + " | Tipologia: " + tipologia +
-               " | Prezzo: " + p + " | Stato: " + stato +
-               "\nUtente: " + utente + "\nDescrizione: " + descrizione;
+        return "[" + tipologia + "] " + titolo + " (" + categoria + ")";
     }
 }
 
-/* ====================== SOTTOCLASSI ====================== */
+/* ====== SOTTOCLASSI ====== */
 
-// Annuncio per VENDITA (ha un prezzo)
 class AnnuncioVendita extends annuncio {
-    public AnnuncioVendita(String titolo, String descrizione, double prezzo, utente utente) {
-        super(titolo, descrizione, prezzo, utente, TipologiaOfferta.VENDITA);
+    private double prezzo;
+
+    public AnnuncioVendita(String titolo, String descrizione, String categoria, double prezzo) {
+        super(titolo, descrizione, categoria, TipologiaOfferta.VENDITA);
+        this.prezzo = prezzo;
     }
+
+    public double getPrezzo() { return prezzo; }
 }
 
-// Annuncio per SCAMBIO (prezzo non usato)
 class AnnuncioScambio extends annuncio {
-    public AnnuncioScambio(String titolo, String descrizione, utente utente) {
-        super(titolo, descrizione, 0.0, utente, TipologiaOfferta.SCAMBIO);
+    private List<String> desiderati;
+
+    public AnnuncioScambio(String titolo, String descrizione, String categoria, List<String> desiderati) {
+        super(titolo, descrizione, categoria, TipologiaOfferta.SCAMBIO);
+        this.desiderati = desiderati;
     }
+
+    public List<String> getDesiderati() { return desiderati; }
 }
 
-// Annuncio per REGALO (prezzo non usato)
 class AnnuncioRegalo extends annuncio {
-    public AnnuncioRegalo(String titolo, String descrizione, utente utente) {
-        super(titolo, descrizione, 0.0, utente, TipologiaOfferta.REGALO);
+    public AnnuncioRegalo(String titolo, String descrizione, String categoria) {
+        super(titolo, descrizione, categoria, TipologiaOfferta.REGALO);
     }
 }

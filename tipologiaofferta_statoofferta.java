@@ -1,11 +1,12 @@
-public enum TipologiaOfferta {
+enum TipologiaOfferta {
     VENDITA,
     SCAMBIO,
     REGALO
 }
 
-public enum StatoOfferta {
+enum StatoOfferta {
     ATTIVA,
+    ACCETTATA,
     SCADUTA,
     SOSPESA
 }
